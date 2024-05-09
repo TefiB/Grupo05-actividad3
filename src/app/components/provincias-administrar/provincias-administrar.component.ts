@@ -9,11 +9,6 @@ import { ProvinciasService } from 'src/app/services/provincias.service';
 })
 export class ProvinciasAdministrarComponent {
   provincias: Provincia[];
-  //seleccionMult:any[] = [];
-
-
-  //Falta arreglar el seleccionador de imagen de Actualizar, ya que cuando se modifica una imagen, esta se mantiene, cuando en realidad deberia limpiarse el campo.
-  //Falta hacer que la imagen en metodo actualizar no sobreescriba al de la tabla sin antes pulsar el boton Actualizar.
 
   id_select: string = "0";
   indice: number = 0;
@@ -186,7 +181,7 @@ export class ProvinciasAdministrarComponent {
     this.provinciasService.guardarProvincias(this.provincias);
     this.provinciasService.guardarProvinciasLocal();
 
-    this.id_select = "0"; //Esto es nuevo
+    this.id_select = "0"; 
   }
 
   seleccionaValor($event: any) {
@@ -199,20 +194,20 @@ export class ProvinciasAdministrarComponent {
           break;
         }
       }
-      // Habilitar el botón de actualizar
       this.OkActualizacion = 1;
     } else {
-      // Si se selecciona la opción por defecto, deshabilitar el botón de actualizar
       this.OkActualizacion = 0;
     }
   }
+
 
   mostrarVistaPrevia(event: any): void {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.provincias[this.indice].imagen = e.target.result;
+        // Almacenar temporalmente la imagen en nuevo_auxiliar.imagen
+        this.nuevo_auxiliar.imagen = e.target.result;
       };
       reader.readAsDataURL(file);
     }
