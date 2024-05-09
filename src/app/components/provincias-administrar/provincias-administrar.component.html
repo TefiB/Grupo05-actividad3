@@ -1,28 +1,28 @@
 <h1>Administrar Provincias</h1>
 
-<table border="1">
-    <thead>
+<table border="1" class="table table-bordered table-striped">
+    <thead class="thead-dark">
         <th>ID</th>
-        <th>Nombre</th>
+        <th>Imagen</th>
+        <th>Provincia</th>
         <th>Capital</th>
         <th>Descripción</th>
-        <th>Imagen</th>
         <th>Acción</th>
     </thead>
     <tbody *ngIf="provincias.length > 0; else fila">
-        <tr *ngFor=" let provincia of provincias">
+        <tr *ngFor="let provincia of provincias">
             <td>{{provincia.id}}</td>
+            <td><img [src]="provincia.imagen" width="80" height="50"></td>            
             <td>{{provincia.nombre}}</td>
             <td>{{provincia.capital}}</td>
             <td>{{provincia.descripcion}}</td>
-            <td><img [src]="provincia.imagen" width="80" height="50"></td>
-            <button class="btn btn-danger" (click)=eliminar($event) value="{{provincia.id}}">Eliminar</button>
+            <td><button class="btn btn-danger" (click)="eliminar($event)" value="{{provincia.id}}">Eliminar</button></td>
         </tr>
     </tbody>
     <ng-template #fila>
         <tbody>
             <tr>
-                <td colspan="4">No hay mas filas</td>
+                <td colspan="4">No hay más filas</td>
             </tr>
         </tbody>
     </ng-template>
