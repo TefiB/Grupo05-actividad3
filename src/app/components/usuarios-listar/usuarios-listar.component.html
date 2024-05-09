@@ -1,0 +1,99 @@
+<table border="1">
+    <thead>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>password</th>
+        <th>Accion</th>
+    </thead>
+    <tbody *ngIf="usuarios.length > 0; else fila">
+        <tr *ngFor=" let usuario of usuarios">
+            <td>{{usuario.id}}</td>
+            <td>{{usuario.nombre}}</td>
+            <td>{{usuario.password}}</td>
+            <td><button class="btn btn-danger" (click)=eliminar($event) value="{{usuario.id}}">Eliminar</button></td>
+        </tr>
+    </tbody>
+    <ng-template #fila>
+        <tbody>
+            <tr>
+                <td colspan="4">No hay mas filas</td>
+            </tr>
+        </tbody>
+    </ng-template>
+</table>
+<br>
+
+<form (submit)="actualizar()" method="post">
+    <fieldset>
+        <legend>Seleccione un usuario para modificar</legend>
+        <select class="form-control" required [(ngModel)]="id_select" name="id_select"
+            (change)="seleccionaValor($event)">
+            <option class="dropdown-item" disabled selected value="undefined">Seleccione ID</option>
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{usuario.id}}</option>
+        </select>
+        <input (focus)="limpiarNombre()" type="text" [(ngModel)]="actual.nombre" name="actual.nombre" placeholder="Nombre">
+        <input (focus)="limpiarEmail()" type="email" [(ngModel)]="actual.email" name="actual.email" placeholder="Email">
+        <input (focus)="limpiarPassword()" type="password" [(ngModel)]="actual.password" name="actual.password" placeholder="Contraseña">
+        <input (focus)="limpiarRol()" type="text" [(ngModel)]="actual.rol" name="actual.rol" placeholder="Rol">
+        <button (click)="validarCamposActualizar()" class="btn btn-success">Actualizar</button>
+    </fieldset>
+</form>
+
+<div>
+    <div [ngSwitch]="errorNombreA">
+		<div *ngSwitchCase="1">Debes completar el campo nombre.</div>
+		<div *ngSwitchCase="2">Nombre muy largo</div>
+		<div *ngSwitchCase="3">Nombre debe ser alfabetico</div>
+	</div>
+
+    <div [ngSwitch]="errorPasswordA">
+        <div *ngSwitchCase="1">Debes completar el campo password.</div>
+        <div *ngSwitchCase="2">Contraseña muy larga</div>
+        <div *ngSwitchCase="3">Contraseña debe ser alfanumerica, admite mayusculas y @.</div>
+    </div>    
+
+    <div [ngSwitch]="errorEmailA">
+        <div *ngSwitchCase="1">Debes completar el campo email.</div>
+        <div *ngSwitchCase="2">Email muy largo</div>
+        <div *ngSwitchCase="3">Email debe ser nombre@dominio.algo .</div>
+    </div>                       
+    <div [ngSwitch]="errorRolA">
+        <div *ngSwitchCase="1">El rol es <b>user</b> o <b>admin</b></div>
+    </div>       
+</div>	
+
+<br>
+<form (submit)="agregar()" method="post">
+    <fieldset>
+        <legend>Nuevo usuario</legend>
+        <input type="text" [(ngModel)]="nuevo_auxiliar.nombre" name="nuevo_auxiliar.nombre" placeholder="Nombre">
+        <input type="email" [(ngModel)]="nuevo_auxiliar.email" name="nuevo_auxiliar.email" placeholder="Email">
+        <input type="password" [(ngModel)]="nuevo_auxiliar.password" name="nuevo_auxiliar.password"
+            placeholder="Contraseña">
+        <input type="text" [(ngModel)]="nuevo_auxiliar.rol" name="nuevo_auxiliar.rol" placeholder="Rol">
+        <button (click)="validarCampos()" class="btn btn-success">Agregar</button>  
+    </fieldset>
+</form>
+
+<div>
+    <div [ngSwitch]="errorNombre">
+		<div *ngSwitchCase="1">Debes completar el campo nombre.</div>
+		<div *ngSwitchCase="2">Nombre muy largo</div>
+		<div *ngSwitchCase="3">Nombre debe ser alfabetico</div>
+	</div>
+
+    <div [ngSwitch]="errorPassword">
+        <div *ngSwitchCase="1">Debes completar el campo password.</div>
+        <div *ngSwitchCase="2">Contraseña muy larga</div>
+        <div *ngSwitchCase="3">Contraseña debe ser alfanumerica, admite mayusculas y @.</div>
+    </div>    
+
+    <div [ngSwitch]="errorEmail">
+        <div *ngSwitchCase="1">Debes completar el campo email.</div>
+        <div *ngSwitchCase="2">Email muy largo</div>
+        <div *ngSwitchCase="3">Email debe ser nombre@dominio.algo .</div>
+    </div>                       
+    <div [ngSwitch]="errorRol">
+        <div *ngSwitchCase="1">El rol es <b>user</b> o <b>admin</b></div>
+    </div>       
+</div>	

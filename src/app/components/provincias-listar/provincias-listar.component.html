@@ -1,0 +1,26 @@
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Descripcion</th>
+        <th>Bandera</th>
+    </thead>
+    <tbody *ngIf="provincias.length > 0; else fila">
+        <tr *ngFor="let provincia of provincias">
+            <td>{{provincia.id}}</td>
+            <td>{{provincia.nombre}}</td>
+            <td>{{provincia.capital}}</td>
+            <td>{{provincia.descripcion}}</td>
+            <td><img [src]="provincia.imagen" width="80" height="50"></td>
+        </tr>
+    </tbody>
+    <ng-template #fila>
+        <tbody>
+            <tr>
+                <td colspan="4">No hay mas filas</td>
+            </tr>
+        </tbody>
+    </ng-template>
+</table>
+<br>

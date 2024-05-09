@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" routerLink="usuarios/principal">Principal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="usuarios/ingresar" *ngIf="!isUserLoggedIn()">Iniciar sesión<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="usuarios/registrar" *ngIf="!isUserLoggedIn()">Registrarse<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" routerLink="usuarios/home" *ngIf="isUserLoggedIn()">Home<span class="sr-only">(current)</span></a>
+            </li>  
+            <!--<li class="nav-item">
+                <a class="nav-link" routerLink="usuarios/vista"*ngIf="isUserLoggedIn()">Vista</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" routerLink="usuarios/listar"*ngIf="isUserLoggedIn() && isAdmin()">Listar usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="provincias/administrar"*ngIf="isUserLoggedIn() && isAdmin()" >Gestionar</a>
+            </li>	
+            <li class="nav-item">
+                <a class="nav-link" routerLink="provincias/listar"*ngIf="isUserLoggedIn() && !isAdmin()">Listar</a>
+            </li>	
+            <li class="nav-item">
+                <a class="nav-link" id="logout" (click)="logout()" *ngIf="isUserLoggedIn()">Cerrar sesión</a>
+            </li>	
+        </ul>
+    </div>
+</nav> 

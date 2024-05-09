@@ -1,0 +1,114 @@
+<h1>Administrar Provincias</h1>
+
+<table border="1">
+    <thead>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Capital</th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th>Acción</th>
+    </thead>
+    <tbody *ngIf="provincias.length > 0; else fila">
+        <tr *ngFor=" let provincia of provincias">
+            <td>{{provincia.id}}</td>
+            <td>{{provincia.nombre}}</td>
+            <td>{{provincia.capital}}</td>
+            <td>{{provincia.descripcion}}</td>
+            <td><img [src]="provincia.imagen" width="80" height="50"></td>
+            <button class="btn btn-danger" (click)=eliminar($event) value="{{provincia.id}}">Eliminar</button>
+        </tr>
+    </tbody>
+    <ng-template #fila>
+        <tbody>
+            <tr>
+                <td colspan="4">No hay mas filas</td>
+            </tr>
+        </tbody>
+    </ng-template>
+</table>
+<br>
+
+<h3>Nueva Provincia</h3>
+<br>
+<form (submit)="agregar()" method="post">
+    <fieldset>
+        <legend>Nueva provincia</legend>
+        <input type="text" [(ngModel)]="nuevo.nombre" name="nuevo.nombre" 
+            placeholder="Nombre">
+        <input type="text" [(ngModel)]="nuevo.capital" name="nuevo.capital" 
+            placeholder="Capital">
+        <input type="text" [(ngModel)]="nuevo.descripcion" name="nuevo.descripcion"
+            placeholder="Descripcion">
+
+        <div class="col-md-4">
+            <div class="image-input-wrapper">
+                <input id="fileInput" type="file" class="styled-input" (change)="mostrarVistaPreviaNuevo($event)"
+                    accept="image/*">
+                <img *ngIf="nuevo.imagen" [src]="nuevo.imagen" alt="Vista previa de la imagen" class="img-preview" />
+            </div>
+        </div>
+        <button class="btn btn-success" (click)="validarCampos()">Agregar</button>
+    </fieldset>
+</form>
+<div>
+    <div [ngSwitch]="errorNombre">
+        <div *ngSwitchCase="1">Debes completar el campo nombre.</div>
+        <div *ngSwitchCase="2">Nombre muy largo</div>
+        <div *ngSwitchCase="3">Nombre debe ser alfabetico</div>
+    </div>
+
+    <div [ngSwitch]="errorCapital">
+        <div *ngSwitchCase="1">Debes completar el campo capital.</div>
+        <div *ngSwitchCase="2">Capital muy larga</div>
+        <div *ngSwitchCase="3">Capital debe ser alfabetico</div>
+    </div>
+
+    <div [ngSwitch]="errorDescripcion">
+        <div *ngSwitchCase="1">Debes completar el campo descripción.</div>
+        <div *ngSwitchCase="2">Descripción muy corta.</div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<h3>Modificar Provincia</h3>
+
+<form (submit)="actualizar()" method="post">
+    <fieldset>
+        <legend>Seleccione una provincia para modificar</legend>
+        <select class="form-control" required [(ngModel)]="id_select" name="id_select"
+            (change)="seleccionaValor($event)">
+            <option class="dropdown-item" disabled selected value="0">Seleccione ID</option>
+            <option *ngFor="let provincia of provincias" [value]="provincia.id">{{provincia.id}}</option>
+        </select>
+        <input type="text" [(ngModel)]="nuevo_auxiliar.nombre" name="nuevo_auxiliar.nombre" placeholder="Nombre" [disabled]="id_select === '0'">
+       <input type="text" [(ngModel)]="nuevo_auxiliar.capital" name="nuevo_auxiliar.capital" placeholder="Capital" [disabled]="id_select === '0'">
+       <input type="text" [(ngModel)]="nuevo_auxiliar.descripcion" name="nuevo_auxiliar.descripcion" placeholder="Descripción" [disabled]="id_select === '0'">
+       <div class="image-input-wrapper">
+           <input type="file" class="styled-image" (change)="mostrarVistaPrevia($event)" accept="image/*" [disabled]="id_select === '0'">
+           <img *ngIf="nuevo_auxiliar?.imagen" [src]="nuevo_auxiliar.imagen" alt="Vista previa de la imagen" class="img-preview" />
+       </div>
+        <button [disabled]="id_select === '0'" (click)="validarCamposActualizar()" class="btn btn-success">Actualizar</button>
+    </fieldset>
+</form>
+<div>
+    <div [ngSwitch]="errorNombreA">
+        <div *ngSwitchCase="1">Debes completar el campo nombre</div>
+        <div *ngSwitchCase="2">Nombre muy largo</div>
+        <div *ngSwitchCase="3">Nombre debe ser alfabetico</div>
+    </div>
+
+    <div [ngSwitch]="errorCapitalA">
+        <div *ngSwitchCase="1">Debes completar el campo capital</div>
+        <div *ngSwitchCase="2">Capital muy larga</div>
+        <div *ngSwitchCase="3">Capital debe ser alfabetico</div>
+    </div>
+
+    <div [ngSwitch]="errorDescripcionA">
+        <div *ngSwitchCase="1">Debes completar el campo descripcion.</div>
+        <div *ngSwitchCase="2">Descripcion muy corta o nula.</div>
+    </div>
+</div>
